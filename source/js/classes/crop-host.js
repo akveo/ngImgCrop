@@ -179,6 +179,14 @@ crop.factory('cropHost', ['$document', 'cropAreaCircle', 'cropAreaSquare', 'crop
       return temp_canvas.toDataURL(resImgFormat);
     };
 
+    this.getCropObject=function () {
+      return {
+        x: theArea.getX() - theArea.getSize()/2,
+        y: theArea.getY() - theArea.getSize()/2,
+        sideSize: theArea.getSize()/2
+      }
+    };
+
     this.setNewImageSource=function(imageSource) {
       image=null;
       resetCropHost();

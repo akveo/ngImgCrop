@@ -2,10 +2,10 @@
  * ngImgCrop v0.3.2
  * https://github.com/alexk111/ngImgCrop
  *
- * Copyright (c) 2014 Alex Kaul
+ * Copyright (c) 2015 Alex Kaul
  * License: MIT
  *
- * Generated at Wednesday, December 3rd, 2014, 3:54:12 PM
+ * Generated at Wednesday, July 15th, 2015, 3:36:28 PM
  */
 (function() {
 'use strict';
@@ -1546,6 +1546,14 @@ crop.factory('cropHost', ['$document', 'cropAreaCircle', 'cropAreaSquare', 'crop
       return temp_canvas.toDataURL(resImgFormat);
     };
 
+    this.getCropObject=function () {
+      return {
+        x: theArea.getX() - theArea.getSize()/2,
+        y: theArea.getY() - theArea.getSize()/2,
+        sideSize: theArea.getSize()/2
+      }
+    };
+
     this.setNewImageSource=function(imageSource) {
       image=null;
       resetCropHost();
@@ -1792,12 +1800,13 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
 
       var updateResultImage=function(scope) {
         var resultImage=cropHost.getResultImageDataURI();
+        scope.crop = cropHost.getCropObject();
         if(storedResultImage!==resultImage) {
           storedResultImage=resultImage;
           if(angular.isDefined(scope.resultImage)) {
             scope.resultImage=resultImage;
           }
-          scope.onChange({$dataURI: scope.resultImage});
+          scope.onChange({$dataURI: scope.resultImage, $crop: scope.crop});
         }
       };
 

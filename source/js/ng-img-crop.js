@@ -35,12 +35,13 @@ crop.directive('imgCrop', ['$timeout', 'cropHost', 'cropPubSub', function($timeo
 
       var updateResultImage=function(scope) {
         var resultImage=cropHost.getResultImageDataURI();
+        scope.crop = cropHost.getCropObject();
         if(storedResultImage!==resultImage) {
           storedResultImage=resultImage;
           if(angular.isDefined(scope.resultImage)) {
             scope.resultImage=resultImage;
           }
-          scope.onChange({$dataURI: scope.resultImage});
+          scope.onChange({$dataURI: scope.resultImage, $crop: scope.crop});
         }
       };
 
