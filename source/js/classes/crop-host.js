@@ -183,7 +183,7 @@ crop.factory('cropHost', ['$document', 'cropAreaCircle', 'cropAreaSquare', 'crop
       return {
         x: theArea.getX() - theArea.getSize()/2,
         y: theArea.getY() - theArea.getSize()/2,
-        sideSize: theArea.getSize()/2
+        size: theArea.getSize()
       }
     };
 
