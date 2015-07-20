@@ -5,7 +5,7 @@
  * Copyright (c) 2015 Alex Kaul
  * License: MIT
  *
- * Generated at Thursday, July 16th, 2015, 6:51:33 PM
+ * Generated at Monday, July 20th, 2015, 7:07:44 PM
  */
 (function() {
 'use strict';
@@ -167,7 +167,7 @@ crop.factory('cropAreaSquare', ['cropArea', function(CropArea) {
   var CropAreaSquare = function() {
     CropArea.apply(this, arguments);
 
-    this._resizeCtrlBaseRadius = 10;
+    this._resizeCtrlBaseRadius = 20;
     this._resizeCtrlNormalRatio = 0.75;
     this._resizeCtrlHoverRatio = 1;
     this._iconMoveNormalRatio = 0.9;
