@@ -5,7 +5,7 @@
  * Copyright (c) 2015 Alex Kaul
  * License: MIT
  *
- * Generated at Thursday, July 30th, 2015, 6:57:26 PM
+ * Generated at Thursday, July 30th, 2015, 7:03:07 PM
  */
 (function() {
 'use strict';
@@ -1437,12 +1437,18 @@ crop.factory('cropHost', ['$document', 'cropAreaCircle', 'cropAreaSquare', 'crop
       }
     }
 
-   function setInitialCropArea(canvasDims) {
-       imgScale = image.width / canvasDims[0];
-       theArea.setX((initialCrop.x + initialCrop.width/2) / imgScale);
-       theArea.setY((initialCrop.y + initialCrop.height/2) / imgScale);
-       theArea.setSize(initialCrop.width / imgScale);
-   }
+    function setInitialCropArea(canvasDims) {
+        if (initialCrop) {
+            imgScale = image.width / canvasDims[0];
+            theArea.setX((initialCrop.x + initialCrop.width/2) / imgScale);
+            theArea.setY((initialCrop.y + initialCrop.height/2) / imgScale);
+            theArea.setSize(initialCrop.width / imgScale);
+        } else {
+            theArea.setX(ctx.canvas.width / 2);
+            theArea.setY(ctx.canvas.height / 2);
+            theArea.setSize(Math.min(200, ctx.canvas.width / 2, ctx.canvas.height / 2));
+        }
+    }
 
     // Resets CropHost
     var resetCropHost=function() {

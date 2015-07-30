@@ -69,12 +69,18 @@ crop.factory('cropHost', ['$document', 'cropAreaCircle', 'cropAreaSquare', 'crop
       }
     }
 
-   function setInitialCropArea(canvasDims) {
-       imgScale = image.width / canvasDims[0];
-       theArea.setX((initialCrop.x + initialCrop.width/2) / imgScale);
-       theArea.setY((initialCrop.y + initialCrop.height/2) / imgScale);
-       theArea.setSize(initialCrop.width / imgScale);
-   }
+    function setInitialCropArea(canvasDims) {
+        if (initialCrop) {
+            imgScale = image.width / canvasDims[0];
+            theArea.setX((initialCrop.x + initialCrop.width/2) / imgScale);
+            theArea.setY((initialCrop.y + initialCrop.height/2) / imgScale);
+            theArea.setSize(initialCrop.width / imgScale);
+        } else {
+            theArea.setX(ctx.canvas.width / 2);
+            theArea.setY(ctx.canvas.height / 2);
+            theArea.setSize(Math.min(200, ctx.canvas.width / 2, ctx.canvas.height / 2));
+        }
+    }
 
     // Resets CropHost
     var resetCropHost=function() {
