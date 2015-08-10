@@ -113,6 +113,8 @@ crop.factory('cropCanvas', [function() {
       ctx.stroke();
       ctx.clip();
 
+      detectSubsampling(image);         //Some magic, helps to render crop area in IOS properly :)
+
       // draw part of original image
       if (size > 0) {
           ctx.drawImage(image, xLeft*xRatio, yTop*yRatio, size*xRatio, size*yRatio, xLeft, yTop, size, size);
@@ -125,6 +127,25 @@ crop.factory('cropCanvas', [function() {
 
       ctx.restore();
     };
-
   };
+
+  /**
+   * Detect subsampling in loaded image.
+   * In iOS, larger images than 2M pixels may be subsampled in rendering.
+   */
+  function detectSubsampling(img) {
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    if (iw * ih > 1024 * 1024) { // subsampling may happen over megapixel image
+      var canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 1;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, -iw + 1, 0);
+      // subsampled image becomes half smaller in rendering size.
+      // check alpha channel value to confirm image is covering edge pixel or not.
+      // if alpha value is 0 image is not covering, hence subsampled.
+      return ctx.getImageData(0, 0, 1, 1).data[3] === 0;
+    } else {
+      return false;
+    }
+  }
 }]);
